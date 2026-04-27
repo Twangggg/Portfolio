@@ -1,0 +1,27 @@
+{
+  "title": "Portfolio",
+  "tagline": "Backend developer building reliable systems.",
+  "siteUrl": "https://example.com",
+  "author": {
+    "name": "Your Name",
+    "role": "Backend Developer",
+    "email": "you@example.com",
+    "links": {
+      "github": "https://github.com/your-handle",
+      "linkedin": "https://www.linkedin.com/in/your-handle"
+    }
+  },
+  "socialPreview": {
+    "ogImagePath": "/og.png"
+  },
+  "showcase": {
+    "model": {
+      "src": "/public/models/Diamond Sword.glb",
+      "alt": "3D model",
+      "autoRotate": true,
+      "rotationPerSecond": "20deg",
+      "environmentImage": "neutral",
+      "exposure": "1"
+    }
+  }
+}

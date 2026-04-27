@@ -8,19 +8,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        aquamarine: {
-          50: "#beffdc",
-          100: "#8fffc7",
-          200: "#00f6a5",
-          300: "#00dc93",
-          400: "#00bf7f",
-          500: "#00a06a",
-          600: "#008154",
-          700: "#00613f",
-          800: "#004229",
-          900: "#002414",
-          950: "#00150a",
-        },
+        bg: "rgb(var(--bg) / <alpha-value>)",
+        surface: "rgb(var(--surface) / <alpha-value>)",
+        fg: "rgb(var(--fg) / <alpha-value>)",
+        muted: "rgb(var(--muted) / <alpha-value>)",
+        stroke: "rgb(var(--stroke) / <alpha-value>)",
+        accent: "rgb(var(--accent) / <alpha-value>)",
+        accentFg: "rgb(var(--accent-fg) / <alpha-value>)",
       },
     },
   },

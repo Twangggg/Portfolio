@@ -1,0 +1,19 @@
+{
+  "title": "Skills",
+  "description": "A quick view of my technical strengths and how I work with clients.",
+  "groups": [
+    {
+      "title": "Core backend",
+      "items": ["API design", "PostgreSQL", "Caching", "Reliability", "Integrations"]
+    },
+    {
+      "title": "Ops / delivery",
+      "items": ["Docker", "CI/CD", "Observability", "Debugging", "Performance tuning"]
+    },
+    {
+      "title": "Collaboration",
+      "items": ["Scoping & estimation", "Clear documentation", "Weekly updates", "Handover-ready delivery"]
+    }
+  ]
+}
+

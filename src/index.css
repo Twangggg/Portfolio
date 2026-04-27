@@ -1,3 +1,60 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    /* Monochrome scale from provided SVG:
+       50  #F1F1F1 (241 241 241)
+       100 #DBDBDB (219 219 219)
+       200 #BABABA (186 186 186)
+       300 #9B9B9B (155 155 155)
+       400 #7C7C7C (124 124 124)
+       500 #4F4F4F (79 79 79)
+       600 #292929 (41 41 41)
+       700 #181818 (24 24 24)
+       800 #101010 (16 16 16)
+       900 #0B0B0B (11 11 11)
+       950 #000000 (0 0 0)
+    */
+    /* Dark-first monochrome (black-dominant) */
+    --bg: 11 11 11; /* 900 */
+    --surface: 24 24 24; /* 700 */
+    --fg: 241 241 241; /* 50 */
+    --muted: 155 155 155; /* 300 */
+    --stroke: 41 41 41; /* 600 */
+    --accent: 241 241 241; /* 50 */
+    --accent-fg: 16 16 16; /* 800 */
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg text-fg antialiased;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@layer utilities {
+  .scanlines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgb(var(--fg) / 0.04) 0px,
+      rgb(var(--fg) / 0.04) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  }
+}

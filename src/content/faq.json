@@ -1,0 +1,27 @@
+{
+  "title": "FAQ",
+  "description": "Common client questions about scope, estimates, and delivery.",
+  "items": [
+    {
+      "q": "Do you work with non-technical clients?",
+      "a": "Yes. I can translate technical trade-offs into business impact, and I’ll propose options with clear pros/cons."
+    },
+    {
+      "q": "How do estimates work?",
+      "a": "I estimate based on scope and unknowns. For larger work, I prefer milestones with a review point after discovery."
+    },
+    {
+      "q": "Do you provide documentation?",
+      "a": "Yes — I ship with a README, setup steps, and a simple runbook so your team can operate the system."
+    },
+    {
+      "q": "Can you take over an existing codebase?",
+      "a": "Yes. I’ll start with a short audit to understand architecture, bottlenecks, and risks before changing anything big."
+    },
+    {
+      "q": "Can you do ongoing maintenance?",
+      "a": "Yes. Retainer engagements work well for iterative improvements and operational support."
+    }
+  ]
+}
+

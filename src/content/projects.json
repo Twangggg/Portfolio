@@ -1,0 +1,48 @@
+[
+  {
+    "slug": "realtime-analytics-api",
+    "name": "Realtime Analytics API",
+    "summary": "Low-latency ingestion + aggregation API for dashboards.",
+    "role": "Backend Engineer",
+    "year": "2026",
+    "highlights": [
+      "Designed ingestion pipeline and idempotent writes.",
+      "Reduced p95 latency from 220ms to 65ms via caching + query tuning.",
+      "Added structured logging and alert-ready error taxonomy."
+    ],
+    "caseStudy": {
+      "problem": "Dashboards needed near-real-time aggregates, but the existing pipeline was batch-oriented and slow under spikes.",
+      "approach": "Built an ingestion API with idempotency keys, optimized aggregation queries, and added Redis caching for hot windows. Added structured logs and consistent error codes for alerting.",
+      "outcome": "Lower latency, higher throughput, and better operational visibility with clear failure modes.",
+      "metrics": ["p95 220ms → 65ms", "idempotent writes", "structured logs + alerts"]
+    },
+    "tech": ["Go", "PostgreSQL", "Redis", "Docker"],
+    "links": {
+      "repo": "https://github.com/your-handle/realtime-analytics-api",
+      "demo": ""
+    }
+  },
+  {
+    "slug": "payments-service",
+    "name": "Payments Service",
+    "summary": "Service layer for subscriptions, invoices, and webhooks.",
+    "role": "Backend Engineer",
+    "year": "2025",
+    "highlights": [
+      "Implemented webhook verification + retries with dead-letter queue.",
+      "Built audit trail for compliance reporting.",
+      "Improved reliability with circuit breakers and graceful degradation."
+    ],
+    "caseStudy": {
+      "problem": "Payment failures were hard to debug and retries caused duplicate side effects.",
+      "approach": "Implemented signature verification, idempotent handlers, retry policies with a dead-letter queue, and an audit trail for traceability.",
+      "outcome": "More reliable processing with fewer duplicates and faster incident resolution.",
+      "metrics": ["idempotent handlers", "DLQ-based retries", "audit trail"]
+    },
+    "tech": ["Node.js", "TypeScript", "PostgreSQL"],
+    "links": {
+      "repo": "",
+      "demo": ""
+    }
+  }
+]
