@@ -51,7 +51,7 @@ export default function TerminalFetcher() {
             <div className="flex gap-2">
               <span className="text-accent shrink-0">EMAIL</span>
               <span className="text-muted">:</span>
-              <span className="text-fg font-semibold truncate">{email}</span>
+              <a href={`mailto:${email}`} className="text-fg font-semibold truncate hover:underline pointer-events-auto">{email}</a>
             </div>
           </div>
         </div>

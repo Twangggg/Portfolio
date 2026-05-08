@@ -19,8 +19,12 @@ const cmds = {
     fn: () => [
       "",
       "Available commands:",
-      ...Object.entries(cmds)
-        .map(([name, cmd]) => `  ${name.padEnd(14)} ${cmd.desc}`),
+      ...Object.entries(cmds).map(([name, cmd]) => (
+        <div key={name} className="flex items-baseline gap-3 text-sm pl-2">
+          <span className="font-semibold text-fg shrink-0 w-28">{name}</span>
+          <span className="text-muted">{cmd.desc}</span>
+        </div>
+      )),
       "",
     ],
   },
@@ -37,10 +41,10 @@ const cmds = {
     fn: () => [
       "",
       <div key="a1" className="text-sm text-fg">
-        <span className="font-semibold">{site.author?.name}</span><span className="text-muted"> — </span>{site.author?.role}
+        <span className="font-semibold">{site.author?.name}</span><span className="text-muted"> — </span><span className="font-semibold">{site.author?.role}</span>
       </div>,
       <div key="a2" className="text-sm text-muted">
-        <span className="font-semibold text-fg">"{site.tagline}"</span>
+        "{site.tagline}"
       </div>,
       "",
     ],
@@ -73,7 +77,7 @@ const cmds = {
         </div>,
         <div key={`${p.slug}-r`} className="flex items-baseline gap-2 pl-6 text-sm leading-relaxed">
           <span className="text-accent/70 text-xs">role</span>
-          <span className="text-fg">{p.role}</span>
+          <span className="text-fg font-semibold">{p.role}</span>
         </div>,
         <div key={`${p.slug}-t`} className="flex items-baseline gap-2 pl-6 text-sm leading-relaxed">
           <span className="text-accent/70 text-xs">tech</span>
@@ -94,15 +98,15 @@ const cmds = {
       "",
       <div key="c1" className="flex items-baseline gap-2 text-sm">
         <span className="text-accent">email</span>
-        <span className="text-fg font-semibold">{site.author?.email || "N/A"}</span>
+        <a href={`mailto:${site.author?.email}`} className="text-fg font-semibold hover:underline pointer-events-auto">{site.author?.email || "N/A"}</a>
       </div>,
       <div key="c2" className="flex items-baseline gap-2 text-sm">
         <span className="text-accent">github</span>
-        <span className="text-fg font-semibold">{site.author?.links?.github || "N/A"}</span>
+        <a href={site.author?.links?.github} target="_blank" rel="noreferrer" className="text-fg font-semibold hover:underline pointer-events-auto">{site.author?.links?.github || "N/A"}</a>
       </div>,
       <div key="c3" className="flex items-baseline gap-2 text-sm">
         <span className="text-accent">facebook</span>
-        <span className="text-fg font-semibold">{site.author?.links?.facebook || "N/A"}</span>
+        <a href={site.author?.links?.facebook} target="_blank" rel="noreferrer" className="text-fg font-semibold hover:underline pointer-events-auto">{site.author?.links?.facebook || "N/A"}</a>
       </div>,
       "",
     ],
@@ -129,11 +133,11 @@ const cmds = {
   },
   repo: {
     desc: "Show GitHub repository",
-    fn: () => [<span key="r" className="font-semibold">{site.author?.links?.github || "N/A"}</span>],
+    fn: () => [<a key="r" href={site.author?.links?.github} target="_blank" rel="noreferrer" className="font-semibold hover:underline pointer-events-auto">{site.author?.links?.github || "N/A"}</a>],
   },
   email: {
     desc: "Show email address",
-    fn: () => [<span key="e" className="font-semibold">{site.author?.email || "N/A"}</span>],
+    fn: () => [<a key="e" href={`mailto:${site.author?.email}`} className="font-semibold hover:underline pointer-events-auto">{site.author?.email || "N/A"}</a>],
   },
 };
 
@@ -154,7 +158,7 @@ const Terminal = forwardRef(function Terminal(_props, ref) {
     if (!val) return "";
     const match = cmdNames.find((n) => n.startsWith(val) && n !== val);
     if (match) return { text: match.slice(val.length), found: true };
-    return { text: "not found", found: false };
+    return "";
   })();
 
   const inputRef = useRef(null);
