@@ -3,16 +3,16 @@
   "description": "A quick view of my technical strengths and how I work with clients.",
   "groups": [
     {
-      "title": "Core backend",
-      "items": ["API design", "PostgreSQL", "Caching", "Reliability", "Integrations"]
+      "title": "Frontend",
+      "items": ["React", "Next.js", "TypeScript", "HTML & CSS", "Tailwind CSS", "Responsive Design"]
     },
     {
-      "title": "Ops / delivery",
-      "items": ["Docker", "CI/CD", "Observability", "Debugging", "Performance tuning"]
+      "title": "Backend & Database",
+      "items": ["C# ASP.NET", "RESTful API", "SQL Server", "PostgreSQL", "Redis"]
     },
     {
-      "title": "Collaboration",
-      "items": ["Scoping & estimation", "Clear documentation", "Weekly updates", "Handover-ready delivery"]
+      "title": "Cloud & DevOps",
+      "items": ["GCP Compute Engine", "Docker", "Git", "Linux", "Agile/Scrum"]
     }
   ]
 }

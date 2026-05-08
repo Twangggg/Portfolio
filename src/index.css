@@ -33,6 +33,19 @@
 
   body {
     @apply bg-bg text-fg antialiased;
+    overflow: hidden;
+    height: 100%;
+  }
+
+  /* Allow interactive elements inside pointer-events-none to still work */
+  .pointer-events-none a,
+  .pointer-events-none button,
+  .pointer-events-none input,
+  .pointer-events-none select,
+  .pointer-events-none textarea,
+  .pointer-events-none [role="button"],
+  .pointer-events-none [tabindex]:not([tabindex="-1"]) {
+    pointer-events: auto;
   }
 }
 
@@ -56,5 +69,13 @@
       transparent 1px,
       transparent 4px
     );
+  }
+
+  /* Semi-transparent section cards so 3D shows through */
+  main .rounded-2xl.border-stroke.bg-surface {
+    background-color: rgb(var(--surface) / 0.7);
+  }
+  main .rounded-2xl.border-stroke .bg-bg {
+    background-color: rgb(var(--bg) / 0.8);
   }
 }

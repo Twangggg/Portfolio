@@ -1,47 +1,62 @@
 [
   {
-    "slug": "realtime-analytics-api",
-    "name": "Realtime Analytics API",
-    "summary": "Low-latency ingestion + aggregation API for dashboards.",
-    "role": "Backend Engineer",
+    "slug": "foodhub",
+    "name": "FoodHub",
+    "summary": "A comprehensive restaurant management system built with ASP.NET Core 9.0, featuring employee management with role-based access, real-time order tracking, menu management, JWT authentication, Redis caching, and multi-language support.",
+    "role": "Full Stack Developer",
     "year": "2026",
     "highlights": [
-      "Designed ingestion pipeline and idempotent writes.",
-      "Reduced p95 latency from 220ms to 65ms via caching + query tuning.",
-      "Added structured logging and alert-ready error taxonomy."
+      "Built employee management with role-based authorization (Manager, Chef, Cashier).",
+      "Implemented JWT authentication with refresh tokens and CSRF/XSS protection.",
+      "Integrated Redis caching, background email jobs, and Cloudinary media management.",
+      "Added localization, API versioning, rate limiting, and OpenTelemetry observability."
     ],
     "caseStudy": {
-      "problem": "Dashboards needed near-real-time aggregates, but the existing pipeline was batch-oriented and slow under spikes.",
-      "approach": "Built an ingestion API with idempotency keys, optimized aggregation queries, and added Redis caching for hot windows. Added structured logs and consistent error codes for alerting.",
-      "outcome": "Lower latency, higher throughput, and better operational visibility with clear failure modes.",
-      "metrics": ["p95 220ms → 65ms", "idempotent writes", "structured logs + alerts"]
+      "problem": "Restaurants relying on manual processes face challenges in employee coordination, order tracking, and reporting, leading to operational inefficiency and errors.",
+      "approach": "Developed a full-featured API with ASP.NET Core 9.0 using MediatR for CQRS and Entity Framework Core. Implemented role-based access control, JWT auth with refresh tokens, Redis caching, background jobs for email notifications, and OpenTelemetry for observability.",
+      "outcome": "A maintainable, secure, and observable restaurant management system with automated health monitoring, comprehensive API versioning, and robust protection against common web attacks.",
+      "metrics": ["JWT + refresh tokens", "Redis caching", "Role-based access", "OpenTelemetry tracing"]
     },
-    "tech": ["Go", "PostgreSQL", "Redis", "Docker"],
+    "tech": ["ASP.NET Core 9.0", "Entity Framework Core", "MediatR", "JWT", "Redis", "SQL Server", "Serilog", "xUnit"],
     "links": {
-      "repo": "https://github.com/your-handle/realtime-analytics-api",
+      "repo": "https://github.com/Twangggg/quan-ly-nha-hang-be",
+      "demo": "https://github.com/PhucPhucc/quan-ly-nha-hang-fe"
+    }
+  },
+  {
+    "slug": "joyleebook",
+    "name": "JoyLeeBook",
+    "summary": "A web-based novel reading platform built with Java Servlet MVC, allowing users to register, browse, read stories online, and authors to submit their work through a dedicated dashboard.",
+    "role": "Full Stack Developer",
+    "year": "2025",
+    "highlights": [
+      "User registration and authentication system.",
+      "Browse, search, and read stories online.",
+      "Admin panel for comprehensive story management.",
+      "Author dashboard for story submission and management.",
+      "User comments and ratings system."
+    ],
+    "tech": ["Servlet", "JSP", "MySQL", "Tomcat", "HTML/CSS", "JavaScript"],
+    "links": {
+      "repo": "https://github.com/nnguyenbon/JoyLeeBook_v2.0",
       "demo": ""
     }
   },
   {
-    "slug": "payments-service",
-    "name": "Payments Service",
-    "summary": "Service layer for subscriptions, invoices, and webhooks.",
-    "role": "Backend Engineer",
+    "slug": "joyleewrite",
+    "name": "JoyLeeWrite",
+    "summary": "A desktop application built with C# WPF (.NET 8.0) that provides authors with a distraction-free writing environment featuring rich text formatting, AI integration, and story export as images.",
+    "role": "Solo Developer",
     "year": "2025",
     "highlights": [
-      "Implemented webhook verification + retries with dead-letter queue.",
-      "Built audit trail for compliance reporting.",
-      "Improved reliability with circuit breakers and graceful degradation."
+      "Built with MVVM architecture using C# and .NET 8.0 WPF.",
+      "Rich text formatting and distraction-free writing interface.",
+      "AI integration for intelligent writing assistance.",
+      "Export completed stories as images."
     ],
-    "caseStudy": {
-      "problem": "Payment failures were hard to debug and retries caused duplicate side effects.",
-      "approach": "Implemented signature verification, idempotent handlers, retry policies with a dead-letter queue, and an audit trail for traceability.",
-      "outcome": "More reliable processing with fewer duplicates and faster incident resolution.",
-      "metrics": ["idempotent handlers", "DLQ-based retries", "audit trail"]
-    },
-    "tech": ["Node.js", "TypeScript", "PostgreSQL"],
+    "tech": ["C#", ".NET 8.0 (WPF)", "Entity Framework Core", "MVVM"],
     "links": {
-      "repo": "",
+      "repo": "https://github.com/Twangggg/JoyLeeWrite",
       "demo": ""
     }
   }

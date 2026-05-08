@@ -25,8 +25,8 @@ export default function FaqPage() {
   return (
     <>
       <SEO title={content.title} description={content.description} path="/faq" />
-      <Nav onOpenTutorial={() => tutorial.setOpen(true)} />
-      <CommandPalette onOpenTutorial={() => tutorial.setOpen(true)} />
+      <Nav />
+      <CommandPalette />
       <TutorialModal open={tutorial.open} onClose={() => tutorial.setOpen(false)} />
 
       <main className="mx-auto max-w-5xl px-6 py-16">

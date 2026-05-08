@@ -39,8 +39,8 @@ export default function ProjectDetailPage() {
         description={project.summary}
         path={`/projects/${project.slug}`}
       />
-      <Nav onOpenTutorial={() => tutorial.setOpen(true)} />
-      <CommandPalette onOpenTutorial={() => tutorial.setOpen(true)} />
+      <Nav />
+      <CommandPalette />
       <TutorialModal open={tutorial.open} onClose={() => tutorial.setOpen(false)} />
 
       <div className="mx-auto max-w-5xl px-6 py-16">

@@ -3,15 +3,14 @@ import site from "../content/site.json";
 export default function ContactSection() {
   const email = site.author?.email || "you@example.com";
   const github = site.author?.links?.github;
-  const linkedin = site.author?.links?.linkedin;
+  const facebook = site.author?.links?.facebook;
 
   return (
     <section id="contact" className="mx-auto max-w-5xl px-6 py-10">
       <div className="rounded-2xl border border-stroke bg-surface p-8">
         <h2 className="text-xl font-semibold tracking-tight text-fg">Contact</h2>
         <p className="mt-2 text-sm text-muted">
-          Tell me what you’re building and your timeline. I’ll reply with next
-          steps and an estimate.
+          Have a question or want to discuss an opportunity? Feel free to reach out.
         </p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
@@ -26,9 +25,9 @@ export default function ContactSection() {
               GitHub
             </a>
           ) : null}
-          {linkedin ? (
-            <a className="text-sm text-accent hover:underline" href={linkedin}>
-              LinkedIn
+          {facebook ? (
+            <a className="text-sm text-accent hover:underline" href={facebook}>
+              Facebook
             </a>
           ) : null}
         </div>

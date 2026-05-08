@@ -109,7 +109,7 @@ export default function TutorialModal({ open, onClose }) {
             <div className="rounded-2xl border border-stroke bg-bg p-5">
               <div className="text-xs text-muted font-mono">$ 4. Contact in one click</div>
               <div className="mt-3 text-sm text-fg/80">
-                Use the command menu to copy the email or open GitHub/LinkedIn. No “terminal commands”
+                Use the command menu to copy the email or open GitHub/Facebook. No “terminal commands”
                 needed — it’s just a quick launcher.
               </div>
             </div>

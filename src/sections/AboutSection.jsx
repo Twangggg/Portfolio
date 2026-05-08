@@ -5,18 +5,18 @@ export default function AboutSection() {
         <div className="md:col-span-1">
           <h2 className="text-xl font-semibold tracking-tight text-fg">About</h2>
           <p className="mt-3 text-sm leading-relaxed text-muted">
-            A short, client-friendly bio. Focus on outcomes: reliability, delivery
-            speed, and maintainability.
+            A quick intro about who I am and what I do.
           </p>
         </div>
         <div className="md:col-span-2 rounded-2xl border border-stroke bg-surface p-6">
           <p className="text-base leading-relaxed text-fg/80">
-            I build backend systems for SaaS and internal tools: APIs, data
-            pipelines, integrations, and infrastructure that stays boring in
-            production.
+            I&apos;m a backend developer working with C# ASP.NET and React. I build
+            RESTful APIs, work with SQL Server &amp; PostgreSQL, and deploy on
+            Google Cloud. I&apos;m passionate about writing clean, maintainable code
+            and currently looking for a full-time opportunity to grow.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
-            {["APIs", "PostgreSQL", "Caching", "Observability", "Docker"].map((t) => (
+            {["C# ASP.NET", "React", "RESTful API", "SQL Server", "PostgreSQL", "Docker", "GCP"].map((t) => (
               <span
                 key={t}
                 className="rounded-full border border-stroke bg-bg px-3 py-1 text-xs text-fg"

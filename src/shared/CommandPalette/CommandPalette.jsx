@@ -1,10 +1,19 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import site from "../../content/site.json";
+import { useTerminals } from "../../lib/useTerminalStore.jsx";
 
 function isMac() {
   if (typeof navigator === "undefined") return false;
   return /Mac|iPhone|iPad|iPod/i.test(navigator.platform);
+}
+
+function Kbd({ children }) {
+  return (
+    <kbd className="px-1.5 py-0.5 rounded border border-stroke bg-bg text-xs text-muted font-mono leading-none">
+      {children}
+    </kbd>
+  );
 }
 
 function useCmdK(setOpen) {
@@ -22,177 +31,46 @@ function useCmdK(setOpen) {
   }, [setOpen]);
 }
 
-async function tryCopy(text) {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch {
-    return false;
-  }
-}
+const shortcutLabel = (mac, win) => (isMac() ? mac : win);
 
-export default function CommandPalette({ onOpenTutorial }) {
+export default function CommandPalette() {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
-
+  const { sendToTerminal } = useTerminals();
   const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState("");
-  const [activeIndex, setActiveIndex] = useState(0);
-  const inputRef = useRef(null);
 
   useCmdK(setOpen);
 
-  useEffect(() => {
-    if (!open) return;
-    setQuery("");
-    setActiveIndex(0);
-    // focus after paint
-    requestAnimationFrame(() => inputRef.current?.focus());
-  }, [open]);
+  const email = site.author?.email;
+  const github = site.author?.links?.github;
+  const facebook = site.author?.links?.facebook;
 
-  const actions = useMemo(() => {
-    const email = site.author?.email;
-    const github = site.author?.links?.github;
-    const linkedin = site.author?.links?.linkedin;
+  const shortcuts = [
+    { keys: [shortcutLabel("⌘K", "Ctrl+K")], label: "Open commands" },
+    { keys: [shortcutLabel("⌘T", "Win+T")], label: "Open a new terminal" },
+    { keys: ["Esc"], label: "Close / go back" },
+    { keys: ["↑", "↓"], label: "Navigate items" },
+    { keys: ["Enter"], label: "Confirm selection" },
+  ];
 
-    const list = [
-      {
-        id: "go-home",
-        label: "Go to home",
-        hint: "/",
-        run: () => navigate("/"),
-      },
-      ...(onOpenTutorial
-        ? [
-            {
-              id: "open-tutorial",
-              label: "Tutorial: How to use this site",
-              hint: "help",
-              run: () => onOpenTutorial(),
-            },
-          ]
-        : []),
-      {
-        id: "jump-about",
-        label: "Jump: About",
-        hint: "#about",
-        run: () => {
-          navigate("/");
-          setTimeout(() => document.querySelector("#about")?.scrollIntoView({ behavior: "smooth" }), 0);
-        },
-      },
-      {
-        id: "jump-projects",
-        label: "Jump: Projects",
-        hint: "#projects",
-        run: () => {
-          navigate("/");
-          setTimeout(() => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" }), 0);
-        },
-      },
-      {
-        id: "jump-skills",
-        label: "Jump: Skills",
-        hint: "#skills",
-        run: () => {
-          navigate("/");
-          setTimeout(() => document.querySelector("#skills")?.scrollIntoView({ behavior: "smooth" }), 0);
-        },
-      },
-      {
-        id: "jump-contact",
-        label: "Jump: Contact",
-        hint: "#contact",
-        run: () => {
-          navigate("/");
-          setTimeout(() => document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" }), 0);
-        },
-      },
-      {
-        id: "open-faq",
-        label: "Open: FAQ",
-        hint: "/faq",
-        run: () => navigate("/faq"),
-      },
-    ];
-
-    if (email) {
-      list.push({
-        id: "copy-email",
-        label: "Copy email",
-        hint: email,
-        run: async () => {
-          await tryCopy(email);
-        },
-      });
-      list.push({
-        id: "email-me",
-        label: "Email me",
-        hint: `mailto:${email}`,
-        run: () => window.location.assign(`mailto:${email}`),
-      });
-    }
-
-    if (github) {
-      list.push({
-        id: "open-github",
-        label: "Open GitHub",
-        hint: "external",
-        run: () => window.open(github, "_blank", "noreferrer"),
-      });
-    }
-    if (linkedin) {
-      list.push({
-        id: "open-linkedin",
-        label: "Open LinkedIn",
-        hint: "external",
-        run: () => window.open(linkedin, "_blank", "noreferrer"),
-      });
-    }
-
-    if (pathname.startsWith("/projects/")) {
-      list.push({
-        id: "back-home",
-        label: "Back to home",
-        hint: "route",
-        run: () => navigate("/"),
-      });
-    }
-
-    return list;
-  }, [navigate, pathname]);
-
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q) return actions;
-    return actions.filter((a) => `${a.label} ${a.hint}`.toLowerCase().includes(q));
-  }, [actions, query]);
-
-  useEffect(() => {
-    if (activeIndex >= filtered.length) setActiveIndex(0);
-  }, [activeIndex, filtered.length]);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKeyDown = (e) => {
-      if (e.key === "ArrowDown") {
-        e.preventDefault();
-        setActiveIndex((i) => Math.min(i + 1, filtered.length - 1));
-      }
-      if (e.key === "ArrowUp") {
-        e.preventDefault();
-        setActiveIndex((i) => Math.max(i - 1, 0));
-      }
-      if (e.key === "Enter") {
-        e.preventDefault();
-        const action = filtered[activeIndex];
-        if (!action) return;
-        Promise.resolve(action.run()).finally(() => setOpen(false));
-      }
-    };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open, filtered, activeIndex]);
+  const actions = [
+    { id: "home", label: "Go to home", run: () => navigate("/") },
+    { id: "about", label: "About", run: () => sendToTerminal("about") },
+    { id: "skills", label: "Skills", run: () => sendToTerminal("skills") },
+    { id: "projects", label: "Projects", run: () => sendToTerminal("projects") },
+    { id: "contact", label: "Contact", run: () => sendToTerminal("contact") },
+    ...(email
+      ? [
+          { id: "copy-email", label: "Copy email", run: () => navigator.clipboard.writeText(email) },
+          { id: "email-me", label: "Email me", run: () => window.location.assign(`mailto:${email}`) },
+        ]
+      : []),
+    ...(github
+      ? [{ id: "github", label: "Open GitHub", run: () => window.open(github, "_blank", "noreferrer") }]
+      : []),
+    ...(facebook
+      ? [{ id: "facebook", label: "Open Facebook", run: () => window.open(facebook, "_blank", "noreferrer") }]
+      : []),
+  ];
 
   if (!open) {
     return (
@@ -201,17 +79,17 @@ export default function CommandPalette({ onOpenTutorial }) {
         onClick={() => setOpen(true)}
         className="fixed bottom-6 right-6 rounded-xl border border-stroke bg-surface px-3 py-2 text-xs text-muted hover:text-fg hover:bg-bg transition"
       >
-        {isMac() ? "⌘K" : "Ctrl K"} · Command
+        {isMac() ? "⌘K" : "Ctrl K"} · Commands
       </button>
     );
   }
 
   return (
     <div
-      className="fixed inset-0 z-50"
+      className="fixed inset-0 z-50 flex items-center justify-center"
       role="dialog"
       aria-modal="true"
-      aria-label="Command palette"
+      aria-label="Command keys"
     >
       <button
         type="button"
@@ -220,47 +98,68 @@ export default function CommandPalette({ onOpenTutorial }) {
         aria-label="Close"
       />
 
-      <div className="relative mx-auto mt-24 w-[min(720px,calc(100%-2rem))] overflow-hidden rounded-2xl border border-stroke bg-surface">
-        <div className="flex items-center gap-3 border-b border-stroke bg-bg px-4 py-3">
-          <span className="text-xs text-muted font-mono">$</span>
-          <input
-            ref={inputRef}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Type a command…"
-            className="w-full bg-transparent text-sm text-fg placeholder:text-muted outline-none font-mono"
-          />
-          <span className="text-[11px] text-muted">{isMac() ? "ESC" : "Esc"}</span>
+      <div className="relative w-[min(520px,calc(100%-2rem))] max-h-[80vh] overflow-y-auto rounded-2xl border border-stroke bg-surface p-0">
+        <div className="flex items-center justify-between border-b border-stroke bg-bg px-5 py-3 rounded-t-2xl">
+          <div className="text-xs text-muted font-mono">$ command keys</div>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            className="text-xs text-muted hover:text-fg font-mono"
+          >
+            [x]
+          </button>
         </div>
 
-        <ul className="max-h-[420px] overflow-auto py-2">
-          {filtered.length === 0 ? (
-            <li className="px-4 py-6 text-sm text-muted font-mono">
-              No matches. Try “projects”, “email”, “contact”.
-            </li>
-          ) : (
-            filtered.map((a, idx) => (
-              <li key={a.id}>
-                <button
-                  type="button"
-                  onClick={() => Promise.resolve(a.run()).finally(() => setOpen(false))}
-                  className={[
-                    "w-full px-4 py-3 text-left transition",
-                    "hover:bg-bg",
-                    idx === activeIndex ? "bg-bg" : "bg-transparent",
-                  ].join(" ")}
+        <div className="p-5 space-y-6">
+          {/* Keyboard Shortcuts */}
+          <section>
+            <h3 className="text-[11px] text-muted font-mono tracking-wider uppercase mb-3">
+              Keyboard Shortcuts
+            </h3>
+            <div className="space-y-1">
+              {shortcuts.map((s, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-bg transition"
                 >
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="text-sm text-fg font-mono">{a.label}</div>
-                    <div className="text-xs text-muted font-mono">{a.hint}</div>
+                  <span className="text-sm text-fg font-mono">{s.label}</span>
+                  <div className="flex items-center gap-1">
+                    {s.keys.map((k, j) => (
+                      <span key={j}>
+                        <Kbd>{k}</Kbd>
+                        {j < s.keys.length - 1 && (
+                          <span className="text-muted mx-0.5 text-xs">+</span>
+                        )}
+                      </span>
+                    ))}
                   </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Quick Actions */}
+          <section>
+            <h3 className="text-[11px] text-muted font-mono tracking-wider uppercase mb-3">
+              Quick Actions
+            </h3>
+            <div className="grid grid-cols-2 gap-1">
+              {actions.map((a) => (
+                <button
+                  key={a.id}
+                  type="button"
+                  onClick={() => {
+                    Promise.resolve(a.run()).finally(() => setOpen(false));
+                  }}
+                  className="text-left py-2 px-3 rounded-lg text-sm text-fg font-mono hover:bg-bg transition"
+                >
+                  {a.label}
                 </button>
-              </li>
-            ))
-          )}
-        </ul>
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );
 }
-
